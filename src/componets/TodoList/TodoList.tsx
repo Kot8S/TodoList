@@ -1,39 +1,39 @@
-import React from "react";
-import { useTodo } from "../../utils";
 
-import { TodoPanel } from "../ToDoPanel/TodoPanel";
-import { TodoItem } from "./TodoItem/TodoItem";
+import React from 'react';
 
+import { TodoItem } from './TodoItem/TodoItem';
+import { TodoPanel } from '../ToDoPanel/TodoPanel';
 
-export const TodoList: React.FC = () => {  
-  //FunctionComponent- реактерский функционлаьный компонент принимает в себя пропсы, описанные в угловых ковычках
- const { todos, todoIdForEdit, checkTodo, deleteTodo,selectTodoIdForEdit } = useTodo();
+interface TodoListProps {
+  todoIdForEdit: Todo['id'] | null;
+  todos: Todo[];
+  deleteTodo: (id: Todo['id']) => void;
+  checkTodo: (id: Todo['id']) => void;
+  selectTodoIdForEdit: (id: Todo['id']) => void;
+  changeTodo: ({ name, description }: Omit<Todo, 'id' | 'checked'>) => void;
+}
 
-  return (
-    <div>
-      {todos.map((todo) => {
-        if (todo.id === todoIdForEdit)
-          return (
-            <TodoPanel
-              key={todo.id}
-              mode='edit'
-              editTodo={{ name: todo.name, description: todo.description }}
-            />
-          );
-  
-        return (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            checkTodo={checkTodo}
-            deleteTodo={deleteTodo}
-            selectTodoIdForEdit={selectTodoIdForEdit}
-          />
-        );
-      })}
-    </div>
-  );
-};
-
-
-
+export const TodoList: React.FC<TodoListProps> = ({
+  todos,
+  todoIdForEdit,
+  changeTodo,
+  deleteTodo,
+  checkTodo,
+  selectTodoIdForEdit
+}) => (
+  <div>
+    {todos.map((todo) => {
+      if (todo.id === todoIdForEdit)
+        return <TodoPanel mode='edit' changeTodo={changeTodo} editTodo={todo} />;
+      return (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          deleteTodo={deleteTodo}
+          checkTodo={checkTodo}
+          selectTodoIdForEdit={selectTodoIdForEdit}
+        />
+      );
+    })}
+  </div>
+);
