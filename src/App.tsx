@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import { Header } from './componets/Header/Header';
+import { TodoPanel } from './componets/ToDoPanel/TodoPanel';
+import { TodoList } from './componets/TodoList/TodoList';
+import { TodoProvider } from './utils';
+
+import styles from './App.module.css';
+
+
+export const App = () => (
+  < TodoProvider>
+    <div className={styles.app_container}>
+      <div className={styles.container}>
+        <Header/> 
+        <TodoPanel mode='add'/>    
+        <TodoList/>
+      </div>
     </div>
-  );
-}
-
-export default App;
+  </TodoProvider>
+);
+ 
