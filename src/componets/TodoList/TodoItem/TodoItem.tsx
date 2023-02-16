@@ -9,9 +9,10 @@ interface TodoItemProps {
     checkTodo: (id: Todo['id']) => void;
     deleteTodo: (id: Todo['id']) => void;
     selectTodoIdForEdit: (id: Todo['id']) => void;
+    opacity?: number;
 }
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo, checkTodo, deleteTodo, selectTodoIdForEdit }) => {
+export const TodoItem: React.FC<TodoItemProps> = ({ todo, checkTodo, deleteTodo, selectTodoIdForEdit, opacity }) => {
 
   return (
     <div className={styles.todo_item_container}>
@@ -19,7 +20,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, checkTodo, deleteTodo,
        <div
         aria-hidden
         style={{
-           opacity: todo.checked ? 0.5 : 1,
+           opacity: opacity,
            textDecoration: todo.checked ? 'line-throght' : 'none'
         }}
         onClick={() => checkTodo(todo.id)}
